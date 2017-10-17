@@ -1,0 +1,35 @@
+---
+title: "R Markdown and Leaflet"
+author: "Dhiraj Deshmukh"
+date: "October 16, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Required Packages
+```{r}
+library(leaflet)
+library(knitr)
+```
+### Display white hosue on map using leaflet
+```{r}
+leaflet() %>%
+addTiles() %>%
+addMarkers(lat=38.8978266, lng=-77.0376268, popup = "White_House")
+```
+### Display circle and color dot at the location of White House on the map
+```{r}
+ouptut_is_map = leaflet() %>% addTiles()
+df = data.frame(
+  lat = 38.8978266,
+  lng = -77.0376268,
+  size = runif(100, 5, 20),
+  color = sample(colors(), 100)
+) 
+ouptut_is_map = leaflet(df) %>% addTiles()
+ouptut_is_map %>% addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)
+ouptut_is_map %>% addCircleMarkers(radius = runif(100, 4, 10), color = c('red'))
+```
